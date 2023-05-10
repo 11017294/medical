@@ -1,0 +1,14 @@
+server:
+  # 端口号
+  prot: 8201
+  application:
+    # 服务名称
+    name: service-hosp
+  # 环境设置
+  profiles:
+    active: dev
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
