@@ -9,21 +9,15 @@
     <version>1.0.0</version>
     <modules>
         <module>common</module>
-        <module>common/common-util</module>
-        <module>common/service-util</module>
         <module>model</module>
         <module>service</module>
-        <module>service/service-user</module>
     </modules>
     <name>medical</name>
 
     <description>medical</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-boot.version>2.6.13</spring-boot.version>
-
         <java.version>1.8</java.version>
         <cloud.version>Hoxton.RELEASE</cloud.version>
         <alibaba.version>2.2.0.RELEASE</alibaba.version>
@@ -68,9 +62,6 @@
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
-
-            <!--swagger-->
-
 
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>

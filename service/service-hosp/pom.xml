@@ -9,10 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-util</artifactId>
+    <artifactId>service-hosp</artifactId>
 
     <description>
-        通用工具类库
+        医院模块
     </description>
 
 </project>
