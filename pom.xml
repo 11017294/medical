@@ -11,6 +11,7 @@
         <module>common</module>
         <module>model</module>
         <module>service</module>
+        <module>gen</module>
     </modules>
     <name>medical</name>
 
