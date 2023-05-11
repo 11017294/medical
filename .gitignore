@@ -32,3 +32,6 @@ build/
 ### VS Code ###
 .vscode/
 !/src/test/
+
+### application-pro.yml ###
+**/application-pro.yml
