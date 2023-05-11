@@ -21,6 +21,11 @@
             <artifactId>model</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.chen</groupId>
+            <artifactId>service-util</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -51,6 +56,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
