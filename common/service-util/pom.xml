@@ -15,4 +15,12 @@
         业务工具类库
     </description>
 
+    <dependencies>
+        <!-- 接口文档依赖 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
