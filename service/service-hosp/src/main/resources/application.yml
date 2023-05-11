@@ -1,17 +1,17 @@
-server:
-  # 端口号
-  prot: 8201
+spring:
   application:
     # 服务名称
     name: service-hosp
-
-spring:
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
   # 环境设置
   profiles:
     active: pro
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  # 端口号
+  port: 8201
 
 # 以下配置是为了让MyBatis映射指定Mybatis的Mapper文件
 mybatis_plus:
