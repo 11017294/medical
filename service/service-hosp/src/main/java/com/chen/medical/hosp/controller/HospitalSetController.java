@@ -1,6 +1,7 @@
 package com.chen.medical.hosp.controller;
 
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.HospitalSet;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * <p>
@@ -56,6 +58,10 @@ public class HospitalSetController {
     public Long addHospSet(@RequestBody AddHospSetRequest addHospSetRequest){
         HospitalSet hospitalSet = new HospitalSet();
         BeanUtils.copyProperties(addHospSetRequest, hospitalSet);
+
+        Random random = new Random();
+        String keyStr = String.valueOf(System.currentTimeMillis() + random.nextInt(1000));
+        hospitalSet.setSignKey(SecureUtil.md5(keyStr));
 
         boolean flag = hospitalSetService.save(hospitalSet);
 
