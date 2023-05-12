@@ -2,6 +2,7 @@ package com.chen.medical.hosp.controller;
 
 
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.HospitalSet;
@@ -93,6 +94,30 @@ public class HospitalSetController {
     @ApiOperation(value = "批量删除医院信息", response = boolean.class)
     public boolean removeHospitalSet(@RequestBody List<Long> ids){
         return hospitalSetService.removeByIds(ids);
+    }
+
+    @PostMapping("lockHospSet/{id}/{status}")
+    @ApiOperation(value = "设置医院信息状态", response = boolean.class)
+    public Long lockHospSet(@PathVariable Long id,
+                              @PathVariable Integer status){
+        LambdaUpdateWrapper<HospitalSet> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(HospitalSet::getStatus, status);
+        wrapper.eq(HospitalSet::getId, id);
+        boolean flag = hospitalSetService.update(wrapper);
+
+        if(!flag){
+            new RuntimeException("设置医院信息状态失败！");
+        }
+        return id;
+    }
+
+    @PostMapping("sendKey/{id}")
+    @ApiOperation(value = "发送签名密钥", response = boolean.class)
+    public void sendKey(@PathVariable Long id){
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        String signKey = hospitalSet.getSignKey();
+        String hoscode = hospitalSet.getHoscode();
+        // TODO 发送短信
     }
 
 }
