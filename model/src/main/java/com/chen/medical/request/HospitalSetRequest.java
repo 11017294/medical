@@ -12,7 +12,7 @@ import lombok.Data;
  * @since 2023-05-11
  */
 @Data
-public class HospitalSetQueryVO {
+public class HospitalSetRequest {
 
     @ApiModelProperty("医院名称")
     private String hosName;

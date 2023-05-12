@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chen.medical.hosp.mapper.HospitalSetMapper;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.HospitalSet;
-import com.chen.medical.request.HospitalSetQueryVO;
+import com.chen.medical.request.HospitalSetRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +22,10 @@ import org.springframework.stereotype.Service;
 public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, HospitalSet> implements HospitalSetService {
 
     @Override
-    public Page<HospitalSet> findPage(long current, long limit, HospitalSetQueryVO hospitalSetQueryVO) {
+    public Page<HospitalSet> findPage(long current, long limit, HospitalSetRequest hospitalSetRequest) {
         LambdaQueryWrapper<HospitalSet> wrapper = new LambdaQueryWrapper<>();
-        String hosName = hospitalSetQueryVO.getHosName();
-        String hosCode = hospitalSetQueryVO.getHosCode();
+        String hosName = hospitalSetRequest.getHosName();
+        String hosCode = hospitalSetRequest.getHosCode();
         wrapper.like(StringUtils.isNotBlank(hosName), HospitalSet::getHosname, hosName)
                 .eq(StringUtils.isNotBlank(hosCode), HospitalSet::getHoscode, hosCode);
 

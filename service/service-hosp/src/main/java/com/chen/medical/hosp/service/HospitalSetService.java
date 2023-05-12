@@ -4,7 +4,7 @@ package com.chen.medical.hosp.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chen.medical.model.hosp.HospitalSet;
-import com.chen.medical.request.HospitalSetQueryVO;
+import com.chen.medical.request.HospitalSetRequest;
 
 /**
  * <p>
@@ -20,8 +20,8 @@ public interface HospitalSetService extends IService<HospitalSet> {
      * 分页查询医院信息
      * @param current
      * @param limit
-     * @param hospitalSetQueryVO
+     * @param hospitalSetRequest
      * @return
      */
-    Page<HospitalSet> findPage(long current, long limit, HospitalSetQueryVO hospitalSetQueryVO);
+    Page<HospitalSet> findPage(long current, long limit, HospitalSetRequest hospitalSetRequest);
 }
