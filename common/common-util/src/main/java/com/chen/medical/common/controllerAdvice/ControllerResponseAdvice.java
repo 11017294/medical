@@ -2,7 +2,6 @@ package com.chen.medical.common.controllerAdvice;
 
 import com.chen.medical.common.enums.ErrorCode;
 import com.chen.medical.common.exception.BusinessException;
-import com.chen.medical.common.exception.NotControllerResponseAdvice;
 import com.chen.medical.common.result.BaseResponse;
 import com.chen.medical.common.util.ResultUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;

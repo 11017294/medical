@@ -1,4 +1,4 @@
-package com.chen.medical.common.exception;
+package com.chen.medical.common.controllerAdvice;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,8 +13,8 @@ import java.lang.annotation.Target;
  * @author MaybeBin
  * @since 2023-05-13
  */
-@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface NotControllerResponseAdvice {
 
 }
