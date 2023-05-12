@@ -1,5 +1,8 @@
 package com.chen.medical.common.controllerAdvice;
 
+import com.chen.medical.common.enums.ErrorCode;
+import com.chen.medical.common.exception.BusinessException;
+import com.chen.medical.common.exception.NotControllerResponseAdvice;
 import com.chen.medical.common.result.BaseResponse;
 import com.chen.medical.common.util.ResultUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,10 +29,10 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
         // 类和方法上被标注，不进行拦截封装
-//        if (methodParameter.getDeclaringClass().isAnnotationPresent(NotControllerResponseAdvice.class)
-//                || methodParameter.getMethod().isAnnotationPresent(NotControllerResponseAdvice .class)){
-//            return false;
-//        }
+        if (methodParameter.getDeclaringClass().isAnnotationPresent(NotControllerResponseAdvice.class)
+                || methodParameter.getMethod().isAnnotationPresent(NotControllerResponseAdvice .class)){
+            return false;
+        }
         return !methodParameter.getParameterType().isAssignableFrom(BaseResponse.class);
     }
 
@@ -42,7 +45,7 @@ public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {
                 // 将数据包装在ResultVo里后转换为json串进行返回
                 return objectMapper.writeValueAsString(ResultUtils.success(data));
             } catch (JsonProcessingException e) {
-                throw new RuntimeException("");
+                throw new BusinessException(ErrorCode.RESPONSE_PACK_ERROR);
             }
         }
         // 否则直接包装成ResultVo返回
