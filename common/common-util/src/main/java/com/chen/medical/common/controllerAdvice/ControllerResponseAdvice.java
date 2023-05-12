@@ -1,4 +1,4 @@
-package com.chen.medical.controllerAdvice;
+package com.chen.medical.common.controllerAdvice;
 
 import com.chen.medical.common.result.BaseResponse;
 import com.chen.medical.common.util.ResultUtils;
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
  * <p>
- *
+ *  全局统一返回 处理程序
  * </p>
  *
  * @author：MaybeBin

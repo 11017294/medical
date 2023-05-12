@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.chen</groupId>
-            <artifactId>service-util</artifactId>
+            <artifactId>common-util</artifactId>
             <version>1.0.0</version>
         </dependency>
 
