@@ -17,8 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  *  全局统一返回 处理程序
  * </p>
  *
- * @author：MaybeBin
- * @Date: 2022-09-16 14-25
+ * @author MaybeBin
+ * @since 2023-05-11
  */
 @RestControllerAdvice("com.chen.medical")
 public class ControllerResponseAdvice implements ResponseBodyAdvice<Object> {

@@ -15,7 +15,7 @@ public enum ErrorCode {
 
     SUCCESS(200,"成功"),
     FAIL(201, "失败"),
-    PARAM_ERROR( 202, "参数不正确"),
+    PARAM_ERROR( 202, "请求参数有误"),
     SERVICE_ERROR(203, "服务异常"),
     DATA_ERROR(204, "数据异常"),
     DATA_UPDATE_ERROR(205, "数据版本异常"),
