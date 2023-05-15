@@ -9,6 +9,7 @@ import com.chen.medical.model.hosp.HospitalSet;
 import com.chen.medical.request.HospitalSetRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import java.util.Objects;
 
 /**
  * <p>
@@ -24,8 +25,12 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
     @Override
     public Page<HospitalSet> findPage(long current, long limit, HospitalSetRequest hospitalSetRequest) {
         LambdaQueryWrapper<HospitalSet> wrapper = new LambdaQueryWrapper<>();
-        String hosName = hospitalSetRequest.getHosName();
-        String hosCode = hospitalSetRequest.getHosCode();
+        String hosName = null;
+        String hosCode = null;
+        if (Objects.nonNull(hospitalSetRequest)) {
+            hosName = hospitalSetRequest.getHosName();
+            hosCode = hospitalSetRequest.getHosCode();
+        }
         wrapper.like(StringUtils.isNotBlank(hosName), HospitalSet::getHosname, hosName)
                 .eq(StringUtils.isNotBlank(hosCode), HospitalSet::getHoscode, hosCode);
 
