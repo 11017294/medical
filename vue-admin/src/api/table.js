@@ -4,7 +4,7 @@ export function getList(params) {
   return request({
     url: '/vue-admin-template/table/list',
     method: 'get',
-    params
+    data: params
   })
 }
 
@@ -15,7 +15,7 @@ export function findHospSetPage(current, limit, params) {
   return request({
     url: `/admin/hosp/hospitalSet/findPage/${current}/${limit}`,
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -26,7 +26,7 @@ export function addHospSet(params) {
   return request({
     url: '/admin/hosp/hospitalSet/add',
     method: 'post',
-    params
+    data: params
   })
 }
 
@@ -37,7 +37,7 @@ export function editHospSet(params) {
   return request({
     url: '/admin/hosp/hospitalSet/editHospSet',
     method: 'post',
-    params
+    data: params
   })
 }
 

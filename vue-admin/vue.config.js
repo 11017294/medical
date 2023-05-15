@@ -44,7 +44,7 @@ module.exports = {
           '^/dev-ai': ''
         }
       }
-    },
+    }
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
