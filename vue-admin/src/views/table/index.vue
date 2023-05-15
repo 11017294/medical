@@ -1,5 +1,8 @@
 <template>
   <div class="app-container">
+    <div style="margin: 20px 50px">
+      <el-button type="danger" size="mini" @click="removeRows()">批量删除</el-button>
+    </div>
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -7,44 +10,83 @@
       border
       fit
       highlight-current-row
+      @selection-change="handleSelectionChange"
     >
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column type="selection" width="48" align="center" />
+      <el-table-column align="center" label="ID" width="100">
         <template slot-scope="scope">
-          {{ scope.$index }}
+          {{ scope.row.id }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="医院" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.hosname }}
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="编码" width="120" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span>{{ scope.row.hoscode }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="联系人" width="150" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          <span>{{ scope.row.contactsName }}</span>
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
+      <el-table-column label="手机" width="150" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.contactsPhone }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="链接" width="250" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.apiUrl }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="状态" width="80" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
+      <el-table-column label="创建时间" width="180" align="center">
         <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
+          {{ scope.row.createTime }}
         </template>
       </el-table-column>
+      <el-table-column label="修改时间" width="180" align="center">
+        <template slot-scope="scope">
+          {{ scope.row.updateTime }}
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="180" align="center">
+        <template slot-scope="scope">
+          <el-button v-if="scope.row.status === 0" type="warning" size="mini">锁定</el-button>
+          <el-button v-else type="warning" size="mini">解锁</el-button>
+          <el-button
+            type="danger"
+            size="mini"
+            icon="el-icon-delete"
+            @click="removeDataById(scope.row.id)"
+          />
+        </template>
+
+      </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page.sync="current"
+      :page-sizes="[5, 10, 20, 50]"
+      :page-size="limit"
+      :total="total"
+      layout="total, sizes, prev, pager, next, jumper"
+      style="padding: 30px 0; text-align: center;"
+      @current-change="fetchData"
+      @size-change="handleSizeChange"
+    />
   </div>
 </template>
 
 <script>
-import { findHospSetPage } from '@/api/table'
+import { batchRemoveHospSet, findHospSetPage, removeHospitalSet, removeHospSet } from '@/api/table'
 
 export default {
   filters: {
@@ -59,8 +101,13 @@ export default {
   },
   data() {
     return {
-      list: null,
-      listLoading: true
+      list: [],
+      listLoading: true,
+      current: 1,
+      limit: 5,
+      searchObj: {}, // 条件封装对象
+      total: 0, // 总记录数
+      multipleSelection: []
     }
   },
   created() {
@@ -69,10 +116,55 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      findHospSetPage(1, 2, {}).then(response => {
-        console.log(response)
-        this.list = response.data.items
+      this.searchObj.hosname = '医院'
+      findHospSetPage(this.current, this.limit, this.searchObj).then(response => {
+        this.list = response.data.records
+        this.total = response.data.total
         this.listLoading = false
+      })
+    },
+    handleSizeChange(val) {
+      this.limit = val
+      this.fetchData()
+    },
+    removeDataById(id) {
+      this.$confirm('此操作将永久删除医院信息，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => { // 确定执行then方法
+        removeHospSet(id)
+          .then(response => {
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.fetchData()
+          })
+      })
+    },
+    // 复选框选项发生变化的时候触发
+    handleSelectionChange(selection) {
+      this.multipleSelection = selection
+    },
+    removeRows() {
+      const idList = []
+      for (let i = 0; i < this.multipleSelection.length; i++) {
+        idList.push(this.multipleSelection[i].id)
+      }
+      this.$confirm('此操作将永久删除这些医院信息，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        batchRemoveHospSet(idList)
+          .then(response => {
+            this.$message({
+              type: 'success',
+              message: '删除成功！'
+            })
+            this.fetchData()
+          })
       })
     }
   }
