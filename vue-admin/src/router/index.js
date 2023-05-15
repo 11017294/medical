@@ -78,13 +78,13 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/hosp',
     component: Layout,
     children: [
       {
         path: 'index',
         name: 'Form',
-        component: () => import('@/views/form/index'),
+        component: () => import('@/views/hosp/hospitalSet/index.vue'),
         meta: { title: 'Form', icon: 'form' }
       }
     ]

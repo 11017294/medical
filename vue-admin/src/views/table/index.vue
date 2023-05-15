@@ -60,8 +60,8 @@
       </el-table-column>
       <el-table-column label="操作" width="180" align="center">
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status === 0" type="warning" size="mini">锁定</el-button>
-          <el-button v-else type="warning" size="mini">解锁</el-button>
+          <el-button v-if="scope.row.status === 0" type="warning" size="mini" @click="lockHostSet(scope.row.id, 1)">锁定</el-button>
+          <el-button v-else type="success" size="mini" @click="lockHostSet(scope.row.id, 0)">解锁</el-button>
           <el-button
             type="danger"
             size="mini"
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { batchRemoveHospSet, findHospSetPage, removeHospitalSet, removeHospSet } from '@/api/table'
+import { batchRemoveHospSet, findHospSetPage, lockHospSet, removeHospSet } from '@/api/table'
 
 export default {
   filters: {
@@ -114,6 +114,7 @@ export default {
     this.fetchData()
   },
   methods: {
+    // 获取列表
     fetchData() {
       this.listLoading = true
       this.searchObj.hosname = '医院'
@@ -123,10 +124,12 @@ export default {
         this.listLoading = false
       })
     },
+    // 调整页大小
     handleSizeChange(val) {
       this.limit = val
       this.fetchData()
     },
+    // 删除
     removeDataById(id) {
       this.$confirm('此操作将永久删除医院信息，是否继续？', '提示', {
         confirmButtonText: '确定',
@@ -147,6 +150,7 @@ export default {
     handleSelectionChange(selection) {
       this.multipleSelection = selection
     },
+    // 批量删除
     removeRows() {
       const idList = []
       for (let i = 0; i < this.multipleSelection.length; i++) {
@@ -165,6 +169,22 @@ export default {
             })
             this.fetchData()
           })
+      })
+    },
+    // 数据锁定与解锁
+    lockHostSet(id, status) {
+      this.$confirm('此操作将修改医院信息状态，是否继续？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        lockHospSet(id, status).then(res => {
+          this.$message({
+            type: 'success',
+            message: '设置成功！'
+          })
+          this.fetchData()
+        })
       })
     }
   }
