@@ -54,42 +54,28 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: '医院管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '医院信息管理', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
   {
     path: '/hosp',
     component: Layout,
+    redirect: '/hosp/hospSet',
+    name: 'Hosp',
+    meta: { title: '医院管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/hosp/hospitalSet/index.vue'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'hospSet',
+        name: 'HospSet',
+        component: () => import('@/views/hosp/hospitalSet/index'),
+        meta: { title: '医院信息管理', icon: 'table' }
+      },
+      {
+        path: 'hospSet/add',
+        name: 'addHospSet',
+        component: () => import('@/views/hosp/hospitalSet/form'),
+        meta: { title: '添加' },
+        hidden: true
       }
     ]
   },
-
   {
     path: '/nested',
     component: Layout,
