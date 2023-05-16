@@ -71,3 +71,13 @@ export function lockHospSet(id, status) {
     method: 'post'
   })
 }
+
+/**
+ * 按id查询医院信息
+ */
+export function getHospSet(id) {
+  return request({
+    url: `/admin/hosp/hospitalSet/getHospSet/${id}`,
+    method: 'get'
+  })
+}

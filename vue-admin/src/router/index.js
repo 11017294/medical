@@ -57,21 +57,28 @@ export const constantRoutes = [
   {
     path: '/hosp',
     component: Layout,
-    redirect: '/hosp/hospSet',
+    redirect: '/hosp/hospSet/list',
     name: 'Hosp',
     meta: { title: '医院管理', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'hospSet',
+        path: 'hospSet/list',
         name: 'HospSet',
         component: () => import('@/views/hosp/hospitalSet/index'),
-        meta: { title: '医院信息管理', icon: 'table' }
+        meta: { title: '医院信息', icon: 'table' }
       },
       {
         path: 'hospSet/add',
-        name: 'addHospSet',
+        name: 'AddHospSet',
         component: () => import('@/views/hosp/hospitalSet/form'),
-        meta: { title: '添加' },
+        meta: { title: '添加信息' },
+        hidden: true
+      },
+      {
+        path: 'hospSet/edit/:id',
+        name: 'EditHospSet',
+        component: () => import('@/views/hosp/hospitalSet/form'),
+        meta: { title: '编辑信息', noCache: true },
         hidden: true
       }
     ]

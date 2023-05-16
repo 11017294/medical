@@ -2,7 +2,9 @@
   <div class="app-container">
     <div style="margin: 20px">
       <el-button type="danger" size="small" @click="removeRows()">批量删除</el-button>
-      <el-button type="primary" size="small" @click="addHospSet()">添加医院信息</el-button>
+      <router-link to="/hosp/hospSet/add" style="margin-left: 10px;">
+        <el-button type="primary" size="small">添加医院信息</el-button>
+      </router-link>
     </div>
     <el-table
       v-loading="listLoading"
@@ -59,16 +61,14 @@
           {{ scope.row.updateTime }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="180" align="center">
+      <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <el-button v-if="scope.row.status === 0" type="warning" size="mini" @click="lockHostSet(scope.row.id, 1)">锁定</el-button>
           <el-button v-else type="success" size="mini" @click="lockHostSet(scope.row.id, 0)">解锁</el-button>
-          <el-button
-            type="danger"
-            size="mini"
-            icon="el-icon-delete"
-            @click="removeDataById(scope.row.id)"
-          />
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="removeDataById(scope.row.id)" />
+          <router-link :to="'/hosp/hospSet/edit/'+scope.row.id" style="margin-left: 10px;">
+            <el-button type="primary" size="mini" icon="el-icon-edit" />
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -186,11 +186,10 @@ export default {
           this.fetchData()
         })
       })
-    },
-    // 添加医院信息
-    addHospSet() {
-      this.$router.push({ path: '/hosp/hospSet/add' })
     }
   }
 }
 </script>
+<style scoped>
+
+</style>
