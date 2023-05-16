@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 组织架构表
+ * 字典实体类
  * </p>
  *
  * @author MaybeBin
@@ -37,5 +37,9 @@ public class Dict extends BaseEntity {
     @ApiModelProperty("编码")
     @TableField("dict_code")
     private String dictCode;
+
+    @ApiModelProperty("是否包含子节点")
+    @TableField(exist = false)
+    private boolean hasChildren;
 
 }

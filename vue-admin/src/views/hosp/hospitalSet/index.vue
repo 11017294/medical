@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { batchRemoveHospSet, findHospSetPage, lockHospSet, removeHospSet } from '@/api/table'
+import { batchRemoveHospSet, findHospSetPage, lockHospSet, removeHospSet } from '@/api/hospSet'
 
 export default {
   filters: {

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { addHospSet, editHospSet, getHospSet } from '@/api/table'
+import { addHospSet, editHospSet, getHospSet } from '@/api/hospSet'
 
 export default {
   data() {

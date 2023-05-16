@@ -1,13 +1,5 @@
 import request from '@/utils/request'
 
-export function getList(params) {
-  return request({
-    url: '/vue-admin-template/table/list',
-    method: 'get',
-    data: params
-  })
-}
-
 /**
  * 分页查询医院信息
  */
