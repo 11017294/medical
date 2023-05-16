@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * </p>
  *
  * @author MaybeBin
- * @since 2022-01-25 09:30
+ * @since 2022-01-25
  */
 @Configuration
 @EnableTransactionManagement

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * </p>
  *
  * @author MaybeBin
- * @since 2023-05-10 17:11
+ * @since 2023-05-10
  */
 @SpringBootApplication
 @ComponentScan("com.chen")

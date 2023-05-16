@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  * </p>
  *
  * @author MaybeBin
- * @since 2023-05-11 09:20
+ * @since 2023-05-11
  */
 public class GenApplication {
     private static final String AUTHOR = "MaybeBin";
@@ -18,8 +18,8 @@ public class GenApplication {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "333";
     // 以medical为根目录
-    private static final String CATALOGUE = "/service/service-hosp/src/main/java";
-    private static final String PARENT_PACKAGE = "com.chen.medical.hosp";
+    private static final String CATALOGUE = "/service/service_cmn/src/main/java";
+    private static final String PARENT_PACKAGE = "com.chen.medical.cmn";
     private static final String[] tables = {"dict"};
 
     public static void main(String[] args) {

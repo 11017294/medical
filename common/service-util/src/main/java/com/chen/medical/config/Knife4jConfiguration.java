@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
  * </p>
  *
  * @author MaybeBin
- * @since 2022-01-25 09:25
+ * @since 2022-01-25
  */
 @Configuration
 @EnableSwagger2WebMvc
