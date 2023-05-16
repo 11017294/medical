@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
  *  ServiceHosp启动类
  * </p>
  *
- * @author：MaybeBin
- * @Date: 2023-05-10 17:11
+ * @author MaybeBin
+ * @since 2023-05-10 17:11
  */
 @SpringBootApplication
 @ComponentScan("com.chen")

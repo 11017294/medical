@@ -12,6 +12,7 @@
     <modules>
         <module>service-user</module>
         <module>service-hosp</module>
+        <module>service_cmn</module>
     </modules>
 
     <packaging>pom</packaging>

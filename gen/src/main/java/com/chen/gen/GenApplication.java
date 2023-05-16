@@ -6,21 +6,21 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 /**
  * <p>
- *
+ *  代码生成器
  * </p>
  *
- * @author：MaybeBin
- * @Date: 2023-05-11 09:20
+ * @author MaybeBin
+ * @since 2023-05-11 09:20
  */
 public class GenApplication {
     private static final String AUTHOR = "MaybeBin";
-    private static final String URL = "jdbc:mysql://120.24.48.80:3306/medical?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true";
+    private static final String URL = "jdbc:mysql://120.24.48.80:3306/medical_cmn?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT&allowPublicKeyRetrieval=true";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "333";
     // 以medical为根目录
     private static final String CATALOGUE = "/service/service-hosp/src/main/java";
     private static final String PARENT_PACKAGE = "com.chen.medical.hosp";
-    private static final String[] tables = {"hospital_set"};
+    private static final String[] tables = {"dict"};
 
     public static void main(String[] args) {
         all();

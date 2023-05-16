@@ -9,7 +9,7 @@ import lombok.Data;
 
 /**
  * <p>
- * 医院设置表
+ *  医院设置表
  * </p>
  *
  * @author MaybeBin

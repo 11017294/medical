@@ -10,10 +10,12 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
- * swagger配置类
+ * <p>
+ *  swagger配置类
+ * </p>
  *
- * @author：MaybeBin
- * @date: 2022-01-25 09:25
+ * @author MaybeBin
+ * @since 2022-01-25 09:25
  */
 @Configuration
 @EnableSwagger2WebMvc
