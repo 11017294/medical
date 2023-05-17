@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chen.medical.hosp.mapper.HospitalSetMapper;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.HospitalSet;
-import com.chen.medical.request.HospitalSetRequest;
+import com.chen.medical.request.hosp.HospitalSetRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import java.util.Objects;

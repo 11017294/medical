@@ -1,4 +1,4 @@
-package com.chen.medical.request;
+package com.chen.medical.request.hosp;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
