@@ -3,6 +3,9 @@
     <div class="el-toolbar">
       <div class="el-toolbar-body" style="justify-content: flex-start;">
         <el-button type="primary" size="small" @click="exportData">导出<i class="el-icon-download el-icon--right" /></el-button>
+        <el-upload class="inline-block" action="/admin/cmn/dict/importData" :on-success="handleSuccess" :data="{ type: 'dictionary' }" :show-file-list="false">
+          <el-button size="small" type="success">点击上传</el-button>
+        </el-upload>
       </div>
     </div>
     <el-table
@@ -65,6 +68,10 @@ export default {
     },
     exportData() {
       window.location.href = 'http://localhost:8202/admin/cmn/dict/exportDictData'
+    },
+    handleSuccess(response) {
+      // 处理上传成功后的逻辑
+      console.log('上传成功！')
     }
   }
 }
@@ -73,5 +80,9 @@ export default {
 <style scoped lang="scss">
 .el-toolbar{
   margin-bottom: 10px;
+}
+.inline-block {
+  display: inline-block;
+  margin-left: 10px;
 }
 </style>

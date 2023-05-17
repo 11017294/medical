@@ -1,14 +1,19 @@
 package com.chen.medical.cmn.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.chen.medical.cmn.listener.DictListener;
 import com.chen.medical.cmn.mapper.DictMapper;
 import com.chen.medical.cmn.service.DictService;
+import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +68,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
 
         return exportList;
+    }
+
+    @Override
+    public void batchImport(MultipartFile file){
+        try {
+            EasyExcel.read(file.getInputStream(), DictExportDTO.class, new DictListener(baseMapper)).sheet().doRead();
+        } catch (IOException e) {
+            throw new BusinessException(e.getMessage());
+        }
     }
 
 }

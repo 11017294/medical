@@ -3,7 +3,9 @@ package com.chen.medical.cmn.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,4 +31,10 @@ public interface DictService extends IService<Dict> {
      */
     List<DictExportDTO> exportDictData();
 
+    /**
+     * 批量导入
+     * @param file
+     * @throws IOException
+     */
+    void batchImport(MultipartFile file);
 }
