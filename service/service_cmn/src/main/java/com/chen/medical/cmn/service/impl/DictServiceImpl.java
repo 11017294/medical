@@ -23,7 +23,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     @Override
     public List<Dict> findChildData(Long id) {
         LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Dict::getId, id);
+        wrapper.eq(Dict::getParentId, id);
         List<Dict> dictList = baseMapper.selectList(wrapper);
 
         // 向list集合每个dict对象中设置hasChildren
@@ -42,7 +42,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
      */
     private boolean isChildren(Long id) {
         LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Dict::getId, id);
+        wrapper.eq(Dict::getParentId, id);
         Integer count = baseMapper.selectCount(wrapper);
         return count > 0;
     }
