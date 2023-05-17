@@ -1,5 +1,10 @@
 <template>
   <div class="app-container">
+    <div class="el-toolbar">
+      <div class="el-toolbar-body" style="justify-content: flex-start;">
+        <el-button type="primary" size="small" @click="exportData">导出<i class="el-icon-download el-icon--right" /></el-button>
+      </div>
+    </div>
     <el-table
       :data="list"
       style="width: 100%"
@@ -57,11 +62,16 @@ export default {
       dictList(tree.id).then(response => {
         resolve(response.data)
       })
+    },
+    exportData() {
+      window.location.href = 'http://localhost:8202/admin/cmn/dict/exportDictData'
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+.el-toolbar{
+  margin-bottom: 10px;
+}
 </style>

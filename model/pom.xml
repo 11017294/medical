@@ -17,6 +17,11 @@
     </description>
 
     <dependencies>
+        <!-- easyexcel -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
         <!--mybatis-plus 持久层-->
         <dependency>
             <groupId>com.baomidou</groupId>

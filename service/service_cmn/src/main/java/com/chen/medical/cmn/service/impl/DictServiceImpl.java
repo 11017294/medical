@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.chen.medical.cmn.mapper.DictMapper;
 import com.chen.medical.cmn.service.DictService;
+import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +48,21 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         wrapper.eq(Dict::getParentId, id);
         Integer count = baseMapper.selectCount(wrapper);
         return count > 0;
+    }
+
+    @Override
+    public List<DictExportDTO> exportDictData() {
+        List<Dict> dictList = baseMapper.selectList(null);
+        List<DictExportDTO> exportList = new ArrayList<>();
+
+        // 将DictDO转为DictExportDTO
+        for (Dict dict : dictList) {
+            DictExportDTO exportDTO = new DictExportDTO();
+            BeanUtils.copyProperties(dict, exportDTO);
+            exportList.add(exportDTO);
+        }
+
+        return exportList;
     }
 
 }
