@@ -10,6 +10,7 @@ import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +30,7 @@ import java.util.List;
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
     @Override
+    @Cacheable(value = "dict", keyGenerator = "keyGenerator")
     public List<Dict> findChildData(Long id) {
         LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Dict::getParentId, id);
