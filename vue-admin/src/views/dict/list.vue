@@ -4,7 +4,7 @@
       <div class="el-toolbar-body" style="justify-content: flex-start;">
         <el-button type="primary" size="small" @click="exportData">导出<i class="el-icon-download el-icon--right" /></el-button>
         <el-upload class="inline-block" action="/admin/cmn/dict/importData" :on-success="handleSuccess" :data="{ type: 'dictionary' }" :show-file-list="false">
-          <el-button size="small" type="success">点击上传</el-button>
+          <el-button size="small" type="success">点击上传<i class="el-icon-upload el-icon--right" /></el-button>
         </el-upload>
       </div>
     </div>
