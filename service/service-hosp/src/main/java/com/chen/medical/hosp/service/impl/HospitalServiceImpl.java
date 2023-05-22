@@ -45,6 +45,8 @@ public class HospitalServiceImpl implements HospitalService {
         // 给对象赋值
         hospital.setUpdateTime(new Date());
         hospital.setIsDeleted(0);
+        String logoData = hospital.getLogoData().replace(" ", "+");
+        hospital.setLogoData(logoData);
 
         if (Objects.isNull(hospitalExist)){
             hospital.setStatus(0);
