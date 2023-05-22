@@ -9,6 +9,8 @@ import com.chen.medical.model.hosp.HospitalSet;
 import com.chen.medical.request.hosp.HospitalSetRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
 import java.util.Objects;
 
 /**
@@ -36,5 +38,18 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
 
         Page<HospitalSet> page = new Page<>(current, limit);
         return baseMapper.selectPage(page, wrapper);
+    }
+
+    @Override
+    public String getSignByHoscode(String hoscode) {
+        Assert.notNull(hoscode, "hoscode不能为null");
+
+        LambdaQueryWrapper<HospitalSet> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(HospitalSet::getHoscode, hoscode);
+        wrapper.select(HospitalSet::getSignKey);
+
+        HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
+
+        return hospitalSet.getSignKey();
     }
 }

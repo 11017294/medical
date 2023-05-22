@@ -70,6 +70,13 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- hutool工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.21</version>
+        </dependency>
+
         <!-- 日期工具栏依赖 -->
 <!--        <dependency>-->
 <!--            <groupId>joda-time</groupId>-->

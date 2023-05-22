@@ -8,6 +8,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  data:
+    mongodb.uri: mongodb://127.0.0.1:27017/yygh_hosp
 
 server:
   # 端口号

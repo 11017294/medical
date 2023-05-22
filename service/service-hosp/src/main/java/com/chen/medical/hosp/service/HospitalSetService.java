@@ -24,4 +24,11 @@ public interface HospitalSetService extends IService<HospitalSet> {
      * @return
      */
     Page<HospitalSet> findPage(long current, long limit, HospitalSetRequest hospitalSetRequest);
+
+    /**
+     * 获取签名
+     * @param hoscode
+     * @return
+     */
+    String getSignByHoscode(String hoscode);
 }
