@@ -18,7 +18,7 @@ public class GenApplication {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "333";
     // 以medical为根目录
-    private static final String CATALOGUE = "/service/service_cmn/src/main/java";
+    private static final String CATALOGUE = "/service/service-cmn/src/main/java";
     private static final String PARENT_PACKAGE = "com.chen.medical.cmn";
     private static final String[] tables = {"dict"};
 
