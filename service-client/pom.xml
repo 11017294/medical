@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <modules>
+        <module>service-cmn-client</module>
+    </modules>
+
     <packaging>pom</packaging>
     <artifactId>service-client</artifactId>
 
