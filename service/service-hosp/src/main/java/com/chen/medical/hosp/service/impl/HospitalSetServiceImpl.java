@@ -1,8 +1,11 @@
 package com.chen.medical.hosp.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.chen.medical.common.enums.ErrorCode;
+import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.hosp.mapper.HospitalSetMapper;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.HospitalSet;
@@ -11,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -51,5 +55,19 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
         HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
 
         return hospitalSet.getSignKey();
+    }
+
+    @Override
+    public void verifySignature(Map<String, Object> paramMap) throws BusinessException {
+        String hoscode = (String) paramMap.getOrDefault("hoscode", "");
+        String signKey = getSignByHoscode(hoscode);
+
+        String sign = (String) paramMap.getOrDefault("sign", "");
+        String locatSign = SecureUtil.md5(signKey);
+
+        // 不一致抛异常
+        if(!Objects.equals(sign, locatSign)){
+            throw new BusinessException(ErrorCode.SIGN_ERROR);
+        }
     }
 }

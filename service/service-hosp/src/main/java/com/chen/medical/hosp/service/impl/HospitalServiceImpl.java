@@ -1,9 +1,6 @@
 package com.chen.medical.hosp.service.impl;
 
-import cn.hutool.crypto.SecureUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.chen.medical.common.enums.ErrorCode;
-import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.hosp.repository.HospitalRepository;
 import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.hosp.service.HospitalSetService;
@@ -33,7 +30,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public void save(Map<String, Object> paramMap) {
-        verifySignature(paramMap);
+        hospitalSetService.verifySignature(paramMap);
 
         String str = JSONObject.toJSONString(paramMap);
         Hospital hospital = JSONObject.parseObject(str, Hospital.class);
@@ -59,20 +56,13 @@ public class HospitalServiceImpl implements HospitalService {
         hospitalRepository.save(hospital);
     }
 
-    /**
-     * 验证签名
-     * @param paramMap
-     */
-    private void verifySignature(Map<String, Object> paramMap) {
-        String hoscode = (String) paramMap.getOrDefault("hoscode", "");
-        String signKey = hospitalSetService.getSignByHoscode(hoscode);
+    @Override
+    public Hospital getHospital(Map<String, Object> paramMap) {
+        hospitalSetService.verifySignature(paramMap);
 
-        String sign = (String) paramMap.getOrDefault("sign", "");
-        String locatSign = SecureUtil.md5(signKey);
+        String hoscode = (String) paramMap.get("hoscode");
 
-        // 不一致抛异常
-        if(!Objects.equals(sign, locatSign)){
-            throw new BusinessException(ErrorCode.SIGN_ERROR);
-        }
+        return hospitalRepository.getHospitalByHoscode(hoscode);
     }
+
 }
