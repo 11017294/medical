@@ -9,6 +9,7 @@ import com.chen.medical.cmn.service.DictService;
 import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
+import org.ehcache.core.util.CollectionUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -103,6 +105,21 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         wrapper.eq(Dict::getDictCode, dictCode);
         Dict dict = baseMapper.selectOne(wrapper);
         return dict.getName();
+    }
+
+    @Override
+    public List<Dict> findByDictCode(String dictCode) {
+        Assert.notNull(dictCode, "dictCode 不能为空");
+
+        LambdaQueryWrapper<Dict> query = new LambdaQueryWrapper<>();
+        query.eq(Dict::getDictCode, dictCode);
+        query.select(Dict::getId);
+
+        Dict dict = baseMapper.selectOne(query);
+        if(Objects.isNull(dict)){
+            throw new BusinessException("找不到数字字典编码为[" + dictCode + "]的数据");
+        }
+        return findChildData(dict.getId());
     }
 
     /**

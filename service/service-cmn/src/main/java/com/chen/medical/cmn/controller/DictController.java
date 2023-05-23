@@ -51,6 +51,13 @@ public class DictController {
         dictService.batchImport(file);
     }
 
+    @ApiOperation(value="根据 dictCode 获取下级节点")
+    @PostMapping("/findByDictCode/{dictCode}")
+    public List<Dict> findByDictCode(@PathVariable String dictCode){
+        return dictService.findByDictCode(dictCode);
+    }
+
+
     @NotControllerResponseAdvice
     @ApiOperation(value="根据 dictcode 和 value 查询")
     @GetMapping("getName/{dictCode}/{value}")
