@@ -1,11 +1,15 @@
 package com.chen.medical.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chen.medical.cmn.client.DictFeignClient;
 import com.chen.medical.hosp.repository.HospitalRepository;
 import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.Hospital;
+import com.chen.medical.request.hosp.HospitalRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,6 +31,8 @@ public class HospitalServiceImpl implements HospitalService {
     private HospitalRepository hospitalRepository;
     @Autowired
     private HospitalSetService hospitalSetService;
+    @Autowired
+    private DictFeignClient dictFeignClient;
 
     @Override
     public void save(Map<String, Object> paramMap) {
@@ -63,6 +69,40 @@ public class HospitalServiceImpl implements HospitalService {
         String hoscode = (String) paramMap.get("hoscode");
 
         return hospitalRepository.getHospitalByHoscode(hoscode);
+    }
+
+    @Override
+    public Page<Hospital> getHospitalPage(Integer page, Integer limit, HospitalRequest hospitalRequest) {
+        // 构建分页
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        // 构建条件
+        ExampleMatcher example = ExampleMatcher
+                .matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreCase();
+
+        // 拷贝参数对象
+        Hospital hospital = new Hospital();
+        BeanUtils.copyProperties(hospitalRequest, hospital);
+
+        Example<Hospital> matcherExample = Example.of(hospital, example);
+        Page<Hospital> hospitalsPage = hospitalRepository.findAll(matcherExample, pageable);
+        hospitalsPage.getContent().stream().forEach(item -> {
+            setHospitalHosType(item);
+        });
+
+        return hospitalsPage;
+    }
+
+    /**
+     * 设置医院等级
+     * @param hospital
+     */
+    private void setHospitalHosType(Hospital hospital){
+        String hostypeString = dictFeignClient.getDictName("Hostype", hospital.getHostype());
+        String dictName = dictFeignClient.getDictName("Hostype");
+        hospital.getParam().put("hostypeString", hostypeString);
+        hospital.getParam().put("dictName", dictName);
     }
 
 }

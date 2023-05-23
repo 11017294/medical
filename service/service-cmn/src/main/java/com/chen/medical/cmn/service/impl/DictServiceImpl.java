@@ -12,6 +12,7 @@ import com.chen.medical.model.cmn.Dict;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -79,6 +80,41 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());
         }
+    }
+
+    @Override
+    public String getDictName(String dictCode, String value) {
+        Assert.notNull(value, "value不能为空");
+
+        Dict dict = getDictByDictCode(dictCode);
+        Long parentId = dict.getId();
+        // 根据parent_id 和 value进行查询
+        LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dict::getParentId, parentId)
+                .eq(Dict::getValue, value);
+
+        Dict finalDict = baseMapper.selectOne(wrapper);
+        return finalDict.getName();
+    }
+
+    @Override
+    public String getDictName(String dictCode) {
+        LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dict::getDictCode, dictCode);
+        Dict dict = baseMapper.selectOne(wrapper);
+        return dict.getName();
+    }
+
+    /**
+     * 根据 dictCode 获取父数据
+     * @param dictCode
+     * @return
+     */
+    private Dict getDictByDictCode(String dictCode) {
+        LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dict::getDictCode, dictCode);
+        Dict codeDict = baseMapper.selectOne(wrapper);
+        return codeDict;
     }
 
 }

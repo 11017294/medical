@@ -12,6 +12,8 @@
         <module>model</module>
         <module>service</module>
         <module>gen</module>
+        <module>service-client</module>
+        <module>service-client/service-cmn-client</module>
     </modules>
     <name>medical</name>
 

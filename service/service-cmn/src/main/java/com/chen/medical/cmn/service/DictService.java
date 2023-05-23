@@ -37,4 +37,19 @@ public interface DictService extends IService<Dict> {
      * @throws IOException
      */
     void batchImport(MultipartFile file);
+
+    /**
+     * 获取 dictName
+     * @param dictCode
+     * @param value
+     * @return
+     */
+    String getDictName(String dictCode, String value);
+
+    /**
+     * 获取 dictName
+     * @param dictCode
+     * @return
+     */
+    String getDictName(String dictCode);
 }

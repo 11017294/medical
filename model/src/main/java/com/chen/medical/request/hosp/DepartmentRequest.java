@@ -4,10 +4,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 @ApiModel(description = "Department")
-public class DepartmentRequest {
-	
+public class DepartmentRequest implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@ApiModelProperty(value = "医院编号")
 	private String hoscode;
 

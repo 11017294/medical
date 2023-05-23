@@ -2,6 +2,7 @@ package com.chen.medical.cmn.controller;
 
 
 import com.chen.medical.cmn.service.DictService;
+import com.chen.medical.common.controllerAdvice.NotControllerResponseAdvice;
 import com.chen.medical.common.util.ExportUtil;
 import com.chen.medical.dto.cmn.DictExportDTO;
 import com.chen.medical.model.cmn.Dict;
@@ -48,6 +49,21 @@ public class DictController {
     @PostMapping("/importData")
     public void importData(MultipartFile file){
         dictService.batchImport(file);
+    }
+
+    @NotControllerResponseAdvice
+    @ApiOperation(value="根据 dictcode 和 value 查询")
+    @GetMapping("getName/{dictCode}/{value}")
+    public String getDictName(@PathVariable String dictCode,
+                              @PathVariable String value) {
+        return dictService.getDictName(dictCode, value);
+    }
+
+    @NotControllerResponseAdvice
+    @ApiOperation(value="根据 dictCode 查询")
+    @GetMapping("getName/{dictCode}")
+    public String getDictName(@PathVariable String dictCode) {
+        return dictService.getDictName(dictCode);
     }
 
 }
