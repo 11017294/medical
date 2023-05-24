@@ -57,7 +57,7 @@ export const constantRoutes = [
   {
     path: '/hosp',
     component: Layout,
-    redirect: '/hosp/hospSet/list',
+    redirect: '/hosp/hospital/list',
     name: 'Hosp',
     alwaysShow: true,
     meta: { title: '医院管理', icon: 'el-icon-s-help' },
@@ -73,6 +73,13 @@ export const constantRoutes = [
         name: 'HospSet',
         component: () => import('@/views/hosp/hospitalSet/index'),
         meta: { title: '医院信息', icon: 'table' }
+      },
+      {
+        path: 'hospital/show/:id',
+        name: '查看',
+        component: () => import('@/views/hosp/show'),
+        meta: { title: '查看', noCache: true },
+        hidden: true
       },
       {
         path: 'hospSet/add',

@@ -99,7 +99,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public void updateStatus(String id, Integer status) {
-        Hospital hospital = getHospitalById(id);
+        Hospital hospital = getHospital(id);
         hospital.setStatus(status);
         hospital.setUpdateTime(new Date());
 
@@ -108,6 +108,12 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public Hospital getHospitalById(String id) {
+        Hospital hospital = getHospital(id);
+        setHospitalHosType(hospital);
+        return hospital;
+    }
+
+    private Hospital getHospital(String id){
         Optional<Hospital> hospitalOptional = hospitalRepository.findById(id);
         if(!hospitalOptional.isPresent()){
             throw new BusinessException(ErrorCode.NOT_FOUND);
@@ -124,6 +130,7 @@ public class HospitalServiceImpl implements HospitalService {
         String dictName = dictFeignClient.getDictName("Hostype");
         hospital.getParam().put("hostypeString", hostypeString);
         hospital.getParam().put("dictName", dictName);
+        hospital.getParam().put("fullAddress", dictName);
     }
 
 }

@@ -31,3 +31,10 @@ export function updateStatus(id, status) {
     method: 'post'
   })
 }
+
+export function getHospById(id) {
+  return request({
+    url: `/admin/hosp/hospital/show/${id}`,
+    method: 'get'
+  })
+}
