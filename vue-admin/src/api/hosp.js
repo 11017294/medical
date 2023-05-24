@@ -38,3 +38,10 @@ export function getHospById(id) {
     method: 'get'
   })
 }
+
+export function getDeptByHoscode(hoscode) {
+  return request({
+    url: `/admin/hosp/schedule/getDeptList/${hoscode}`,
+    method: 'get'
+  })
+}

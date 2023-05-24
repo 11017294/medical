@@ -10,6 +10,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -94,6 +95,24 @@ public class DepartmentServiceImpl implements DepartmentService {
         if(Objects.nonNull(departmentExist)){
             departmentRepository.deleteById(departmentExist.getId());
         }
+    }
 
+    @Override
+    public List<Department> findDeptTree(String hoscode) {
+        Department department = new Department();
+//        department.setHoscode(hoscode);
+        List<Department> list = getList(department);
+        // todo 待完善
+        return list;
+    }
+
+    private List<Department> getList(Department department){
+        ExampleMatcher example = ExampleMatcher
+                .matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreCase();
+
+        Example<Department> matcherExample = Example.of(department, example);
+        return departmentRepository.findAll(matcherExample);
     }
 }

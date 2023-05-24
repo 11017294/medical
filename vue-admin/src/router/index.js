@@ -94,6 +94,13 @@ export const constantRoutes = [
         component: () => import('@/views/hosp/hospitalSet/form'),
         meta: { title: '编辑信息', noCache: true },
         hidden: true
+      },
+      {
+        path: 'hospital/schedule/:hoscode',
+        name: '排班',
+        component: () => import('@/views/hosp/schedule'),
+        meta: { title: '排班', noCache: true },
+        hidden: true
       }
     ]
   },
