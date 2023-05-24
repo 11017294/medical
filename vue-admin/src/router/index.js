@@ -63,6 +63,12 @@ export const constantRoutes = [
     meta: { title: '医院管理', icon: 'el-icon-s-help' },
     children: [
       {
+        path: 'hospital/list',
+        name: '医院列表',
+        component: () => import('@/views/hosp/list'),
+        meta: { title: '医院列表', icon: 'table' }
+      },
+      {
         path: 'hospSet/list',
         name: 'HospSet',
         component: () => import('@/views/hosp/hospitalSet/index'),

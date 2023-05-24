@@ -21,4 +21,8 @@ public interface HospitalService {
     Hospital getHospital(Map<String, Object> paramMap);
 
     Page<Hospital> getHospitalPage(Integer page, Integer limit, HospitalRequest hospitalRequest);
+
+    void updateStatus(String id, Integer status);
+
+    Hospital getHospitalById(String id);
 }

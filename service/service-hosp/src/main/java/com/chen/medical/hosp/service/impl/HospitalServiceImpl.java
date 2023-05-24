@@ -2,6 +2,8 @@ package com.chen.medical.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chen.medical.cmn.client.DictFeignClient;
+import com.chen.medical.common.enums.ErrorCode;
+import com.chen.medical.common.exception.BusinessException;
 import com.chen.medical.hosp.repository.HospitalRepository;
 import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.hosp.service.HospitalSetService;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -92,6 +95,24 @@ public class HospitalServiceImpl implements HospitalService {
         });
 
         return hospitalsPage;
+    }
+
+    @Override
+    public void updateStatus(String id, Integer status) {
+        Hospital hospital = getHospitalById(id);
+        hospital.setStatus(status);
+        hospital.setUpdateTime(new Date());
+
+        hospitalRepository.save(hospital);
+    }
+
+    @Override
+    public Hospital getHospitalById(String id) {
+        Optional<Hospital> hospitalOptional = hospitalRepository.findById(id);
+        if(!hospitalOptional.isPresent()){
+            throw new BusinessException(ErrorCode.NOT_FOUND);
+        }
+        return hospitalOptional.get();
     }
 
     /**

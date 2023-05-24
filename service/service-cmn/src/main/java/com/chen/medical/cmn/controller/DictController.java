@@ -52,7 +52,7 @@ public class DictController {
     }
 
     @ApiOperation(value="根据 dictCode 获取下级节点")
-    @PostMapping("/findByDictCode/{dictCode}")
+    @GetMapping("/findByDictCode/{dictCode}")
     public List<Dict> findByDictCode(@PathVariable String dictCode){
         return dictService.findByDictCode(dictCode);
     }
