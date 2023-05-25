@@ -1,6 +1,7 @@
 package com.chen.medical.hosp.service;
 
 import com.chen.medical.model.hosp.Department;
+import com.chen.medical.vo.hosp.DepartmentVo;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface DepartmentService {
 
     void removeDepartment(Map<String, Object> paramMap);
 
-    List<Department> findDeptTree(String hoscode);
+    List<DepartmentVo> findDeptTree(String hoscode);
 }

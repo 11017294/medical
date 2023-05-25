@@ -2,16 +2,17 @@ package com.chen.medical.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chen.medical.hosp.repository.ScheduleRepository;
+import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.hosp.service.ScheduleService;
 import com.chen.medical.model.hosp.Schedule;
+import com.chen.medical.vo.hosp.BookingScheduleRuleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -28,6 +29,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private HospitalSetService hospitalSetService;
+    @Autowired
+    private HospitalService hospitalService;
 
     @Override
     public void remove(Map<String, Object> paramMap) {
@@ -96,5 +99,55 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public Map<String, Object> findPageByStream(Integer page, Integer limit, String hoscode, String depcode) {
+        // 创建查询条件对象
+        Schedule scheduleQuery = new Schedule();
+        scheduleQuery.setHoscode(hoscode);
+        scheduleQuery.setDepcode(depcode);
+        scheduleQuery.setIsDeleted(0);
+
+        // 构建分页
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        // 构建条件
+        ExampleMatcher example = ExampleMatcher
+                .matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                .withIgnoreCase();
+
+        Example<Schedule> matcherExample = Example.of(scheduleQuery, example);
+        Page<Schedule> schedulePage = scheduleRepository.findAll(matcherExample, pageable);
+
+        List<Schedule> content = schedulePage.getContent();
+        Map<Date, List<Schedule>> scheduleMap = content.stream().collect(Collectors.groupingBy(Schedule::getWorkDate));
+
+        List<BookingScheduleRuleVo> bookingScheduleRuleList = new ArrayList<>();
+        for (Map.Entry<Date, List<Schedule>> entry : scheduleMap.entrySet()) {
+            BookingScheduleRuleVo bookingSchedule = new BookingScheduleRuleVo();
+            bookingSchedule.setWorkDate(entry.getKey());
+
+            // 统计科室可预约数、剩余预约数
+            List<Schedule> scheduleList = entry.getValue();
+            Integer availableNumber = scheduleList.parallelStream().collect(Collectors.summingInt(Schedule::getAvailableNumber));
+            Integer reservedNumber = scheduleList.parallelStream().collect(Collectors.summingInt(Schedule::getReservedNumber));
+            bookingSchedule.setAvailableNumber(availableNumber);
+            bookingSchedule.setReservedNumber(reservedNumber);
+            bookingScheduleRuleList.add(bookingSchedule);
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("bookingScheduleRuleList", bookingScheduleRuleList);
+        result.put("total", scheduleMap.size());
+
+        //获取医院名称
+        String hosName = hospitalService.getHospName(hoscode);
+        //其他基础数据
+        Map<String, String> baseMap = new HashMap<>();
+        baseMap.put("hosname", hosName);
+        result.put("baseMap", baseMap);
+
+        return result;
     }
 }

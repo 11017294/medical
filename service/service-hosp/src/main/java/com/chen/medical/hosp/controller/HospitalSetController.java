@@ -26,7 +26,6 @@ import java.util.Random;
  * @author MaybeBin
  * @since 2023-05-11
  */
-@CrossOrigin
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
 @Api(value = "医院设置接口", tags = {"医院设置接口"})

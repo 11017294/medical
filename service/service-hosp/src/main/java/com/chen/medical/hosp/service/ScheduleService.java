@@ -20,4 +20,6 @@ public interface ScheduleService {
     Page<Schedule> findPageSchedule(Map<String, Object> paramMap);
 
     void save(Map<String, Object> paramMap);
+
+    Map<String, Object> findPageByStream(Integer page, Integer limit, String hoscode, String depcode);
 }

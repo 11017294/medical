@@ -5,14 +5,13 @@ import com.chen.medical.hosp.repository.DepartmentRepository;
 import com.chen.medical.hosp.service.DepartmentService;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.model.hosp.Department;
+import com.chen.medical.vo.hosp.DepartmentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -98,12 +97,39 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> findDeptTree(String hoscode) {
-        Department department = new Department();
-//        department.setHoscode(hoscode);
-        List<Department> list = getList(department);
-        // todo 待完善
-        return list;
+    public List<DepartmentVo> findDeptTree(String hoscode) {
+        List<DepartmentVo> result = new ArrayList<>();
+
+        // 查询数据
+        Department departmentQuery = new Department();
+        departmentQuery.setHoscode(hoscode);
+        List<Department> list = getList(departmentQuery);
+        // 分组
+        Map<String, List<Department>> departmentMap = list.stream()
+                .collect(Collectors.groupingBy(Department::getBigcode));
+
+        // 构建树型结构
+        for (Map.Entry<String, List<Department>> entry : departmentMap.entrySet()) {
+            String depCode = entry.getKey();
+            List<Department> departmentList  = entry.getValue();
+            // 设置一级科室
+            DepartmentVo departmentVo = new DepartmentVo();
+            departmentVo.setDepcode(depCode);
+            departmentVo.setDepname(departmentList.get(0).getBigname());
+            // 存放子科室
+            List<DepartmentVo> children = new ArrayList<>();
+            departmentVo.setChildren(children);
+            // 得到子科室
+            for (Department department : departmentList) {
+                DepartmentVo childrenItem = new DepartmentVo();
+                childrenItem.setDepcode(department.getDepcode());
+                childrenItem.setDepname(department.getDepname());
+                // 将子科室封装在 list
+                children.add(childrenItem);
+            }
+            result.add(departmentVo);
+        }
+        return result;
     }
 
     private List<Department> getList(Department department){

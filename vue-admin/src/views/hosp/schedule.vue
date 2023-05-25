@@ -7,13 +7,26 @@
         <el-tree
           :data="data"
           :props="defaultProps"
-          :default-expand-all="true"
           @node-click="handleNodeClick"
         />
       </el-aside>
       <el-main style="padding: 0 0 0 20px;">
         <el-row style="width: 100%">
           <!-- 排班日期 分页 -->
+          <el-tag v-for="(item,index) in bookingScheduleList" :key="item.id" :type="index === activeIndex ? '' : 'info'" style="height: 60px;margin-right: 5px;margin-right:15px;cursor:pointer;" @click="selectDate(item.workDate, index)">
+            {{ item.workDate }} {{ item.dayOfWeek }}<br>
+            {{ item.availableNumber }} / {{ item.reservedNumber }}
+          </el-tag>
+
+          <!-- 分页 -->
+          <el-pagination
+            :current-page="page"
+            :total="total"
+            :page-size="limit"
+            class="pagination"
+            layout="prev, pager, next"
+            @current-change="getPage"
+          />
         </el-row>
         <el-row style="margin-top: 20px;">
           <!-- 排班日期对应的排班医生 -->
@@ -23,6 +36,8 @@
   </div>
 </template>
 <script>
+import { getDeptByHoscode, getScheduleRule } from '@/api/hosp'
+
 export default {
   data() {
     return {
@@ -31,11 +46,23 @@ export default {
         children: 'children',
         label: 'depname'
       },
-      hoscode: null
+      hoscode: null,
+      activeIndex: 0,
+      depcode: null,
+      depname: null,
+      workDate: null,
+
+      bookingScheduleList: [],
+      baseMap: {},
+
+      page: 1, // 当前页
+      limit: 7, // 每页个数
+      total: 0 // 总页码
     }
   },
   created() {
     this.hoscode = this.$route.params.hoscode
+    this.workDate = this.getCurDate()
     this.fetchData()
   },
   methods: {
@@ -44,6 +71,50 @@ export default {
         .then(response => {
           this.data = response.data
         })
+    },
+    getPage(page = 1) {
+      this.page = page
+      this.workDate = null
+      this.activeIndex = 0
+      this.getScheduleRule()
+    },
+
+    getScheduleRule() {
+      getScheduleRule(this.page, this.limit, this.hoscode, this.depcode).then(response => {
+        this.bookingScheduleList = response.data.bookingScheduleRuleList
+
+        this.total = response.data.total
+
+        this.scheduleList = response.data.scheduleList
+        this.baseMap = response.data.baseMap
+
+        // 分页后workDate=null，默认选中第一个
+        if (this.workDate == null) {
+          this.workDate = this.bookingScheduleList[0].workDate
+        }
+      })
+    },
+
+    handleNodeClick(data) {
+      // 科室大类直接返回
+      if (data.children != null) return
+      this.depcode = data.depcode
+      this.depname = data.depname
+
+      this.getPage(1)
+    },
+
+    selectDate(workDate, index) {
+      this.workDate = workDate
+      this.activeIndex = index
+    },
+
+    getCurDate() {
+      const datetime = new Date()
+      const year = datetime.getFullYear()
+      const month = datetime.getMonth() + 1 < 10 ? '0' + (datetime.getMonth() + 1) : datetime.getMonth() + 1
+      const date = datetime.getDate() < 10 ? '0' + datetime.getDate() : datetime.getDate()
+      return year + '-' + month + '-' + date
     }
   }
 }

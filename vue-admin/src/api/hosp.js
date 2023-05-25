@@ -41,7 +41,14 @@ export function getHospById(id) {
 
 export function getDeptByHoscode(hoscode) {
   return request({
-    url: `/admin/hosp/schedule/getDeptList/${hoscode}`,
+    url: `/admin/hosp/department/getDeptList/${hoscode}`,
+    method: 'get'
+  })
+}
+
+export function getScheduleRule(page, limit, hoscode, depcode) {
+  return request({
+    url: `/admin/hosp/schedule/getScheduleRule/${page}/${limit}/${hoscode}/${depcode}`,
     method: 'get'
   })
 }

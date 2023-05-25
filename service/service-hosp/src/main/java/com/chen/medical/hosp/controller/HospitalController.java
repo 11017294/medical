@@ -3,6 +3,7 @@ package com.chen.medical.hosp.controller;
 import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.model.hosp.Hospital;
 import com.chen.medical.request.hosp.HospitalRequest;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- *
+ *  医院相关接口
  * </p>
  *
  * @author MaybeBin
  * @since 2023-05-23
  */
+@Api(tags = {"医院相关接口"})
 @RestController
 @RequestMapping("/admin/hosp/hospital")
-@CrossOrigin
 public class HospitalController {
 
     @Autowired
