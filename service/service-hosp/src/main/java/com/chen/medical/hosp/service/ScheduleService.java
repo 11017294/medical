@@ -21,5 +21,23 @@ public interface ScheduleService {
 
     void save(Map<String, Object> paramMap);
 
-    Map<String, Object> findPageByStream(Integer page, Integer limit, String hoscode, String depcode);
+    /**
+     * 使用 Stream 进行统计 排班
+     * @param page
+     * @param limit
+     * @param hoscode
+     * @param depcode
+     * @return
+     */
+    Map<String, Object> getScheduleRuleByStream(Long page, Long limit, String hoscode, String depcode);
+
+    /**
+     * 使用 mongo api 进行聚合统计 排班
+     * @param page
+     * @param limit
+     * @param hoscode
+     * @param depcode
+     * @return
+     */
+    Map<String, Object> getScheduleRule(Long page, Long limit, String hoscode, String depcode);
 }

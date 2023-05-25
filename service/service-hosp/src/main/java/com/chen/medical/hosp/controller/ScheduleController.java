@@ -30,11 +30,12 @@ public class ScheduleController {
 
     @GetMapping("getScheduleRule/{page}/{limit}/{hoscode}/{depcode}")
     @ApiOperation(value = "分页查询医院信息", response = Page.class)
-    public Map<String, Object> findPage(@PathVariable Integer page,
-                                        @PathVariable Integer limit,
+    public Map<String, Object> findPage(@PathVariable Long page,
+                                        @PathVariable Long limit,
                                         @PathVariable String hoscode,
                                         @PathVariable String depcode){
-        return scheduleService.findPageByStream(page, limit, hoscode, depcode);
+//        return scheduleService.getScheduleRuleByStream(page, limit, hoscode, depcode);
+        return scheduleService.getScheduleRule(page, limit, hoscode, depcode);
     }
 
 }
