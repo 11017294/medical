@@ -52,3 +52,11 @@ export function getScheduleRule(page, limit, hoscode, depcode) {
     method: 'get'
   })
 }
+
+// 查询排班详情
+export function getScheduleDetail(hoscode, depcode, workDate) {
+  return request({
+    url: `/admin/hosp/schedule/getScheduleDetail/${hoscode}/${depcode}/${workDate}`,
+    method: 'get'
+  })
+}

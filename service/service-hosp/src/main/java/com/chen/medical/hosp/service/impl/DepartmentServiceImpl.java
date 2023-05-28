@@ -132,6 +132,12 @@ public class DepartmentServiceImpl implements DepartmentService {
         return result;
     }
 
+    @Override
+    public String getDepartment(String hoscode, String depcode) {
+        Department department = departmentRepository.getDepartmentByHoscodeAndDepcode(hoscode, depcode);
+        return Optional.of(department).get().getDepname();
+    }
+
     private List<Department> getList(Department department){
         ExampleMatcher example = ExampleMatcher
                 .matching()

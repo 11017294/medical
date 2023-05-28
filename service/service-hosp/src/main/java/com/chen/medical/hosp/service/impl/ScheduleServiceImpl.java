@@ -2,6 +2,7 @@ package com.chen.medical.hosp.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chen.medical.hosp.repository.ScheduleRepository;
+import com.chen.medical.hosp.service.DepartmentService;
 import com.chen.medical.hosp.service.HospitalService;
 import com.chen.medical.hosp.service.HospitalSetService;
 import com.chen.medical.hosp.service.ScheduleService;
@@ -39,6 +40,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private HospitalService hospitalService;
     @Autowired
     private MongoTemplate mongoTemplate;
+    @Autowired
+    private DepartmentService departmentService;
 
     @Override
     public void remove(Map<String, Object> paramMap) {
@@ -263,5 +266,30 @@ public class ScheduleServiceImpl implements ScheduleService {
         result.put("baseMap", baseMap);
 
         return result;
+    }
+
+    @Override
+    public List<Schedule> getScheduleDetails(String hoscode, String depcode, String workDate) {
+        // 根据医院编号 和 排班编号查询
+        List<Schedule> schedules = scheduleRepository.
+                getScheduleByHoscodeAndDepcodeAndWorkDate(hoscode, depcode, new DateTime(workDate).toDate());
+
+        schedules.stream().forEach(item -> packageSchedule(item));
+
+        return schedules;
+    }
+
+    /**
+     * 封装排班详情信息（医院名称、科室名称、工作日名称）
+     * @param schedule
+     */
+    private void packageSchedule(Schedule schedule) {
+        String hospname = hospitalService.getHospName(schedule.getHoscode());
+        String depname = departmentService.getDepartment(schedule.getHoscode(), schedule.getDepcode());
+        String dayOfWeek = this.getDayOfWeek(new DateTime(schedule.getWorkDate()));
+
+        schedule.getParam().put("hospname", hospname);
+        schedule.getParam().put("depname", depname);
+        schedule.getParam().put("dayOfWeek", dayOfWeek);
     }
 }

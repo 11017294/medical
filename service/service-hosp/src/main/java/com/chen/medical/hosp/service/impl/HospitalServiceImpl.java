@@ -116,7 +116,7 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public String getHospName(String hoscode) {
         Hospital hospitalExist = hospitalRepository.getHospitalByHoscode(hoscode);
-        return hospitalExist.getHosname();
+        return Optional.of(hospitalExist).get().getHosname();
     }
 
     private Hospital getHospital(String id){

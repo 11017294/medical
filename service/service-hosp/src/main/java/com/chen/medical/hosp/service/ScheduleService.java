@@ -3,6 +3,7 @@ package com.chen.medical.hosp.service;
 import com.chen.medical.model.hosp.Schedule;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,4 +41,13 @@ public interface ScheduleService {
      * @return
      */
     Map<String, Object> getScheduleRule(Long page, Long limit, String hoscode, String depcode);
+
+    /**
+     * 查询排班列表
+     * @param hoscode
+     * @param depcode
+     * @param workDate
+     * @return
+     */
+    List<Schedule> getScheduleDetails(String hoscode, String depcode, String workDate);
 }

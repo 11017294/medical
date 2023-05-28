@@ -24,4 +24,6 @@ public interface DepartmentService {
     void removeDepartment(Map<String, Object> paramMap);
 
     List<DepartmentVo> findDeptTree(String hoscode);
+
+    String getDepartment(String hoscode, String depcode);
 }
