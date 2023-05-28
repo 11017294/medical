@@ -13,6 +13,7 @@
         <module>service</module>
         <module>gen</module>
         <module>service-client</module>
+        <module>gateway</module>
     </modules>
     <name>medical</name>
 

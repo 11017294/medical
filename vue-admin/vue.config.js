@@ -36,15 +36,15 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: {
-      '/dev-ai': {
-        target: 'http://127.0.0.1:9001', // 这里填写项目真实的后台接口地址
-        changOrigin: true, // 设置允许跨域
-        pathRewrite: {
-          '^/dev-ai': ''
-        }
-      }
-    }
+    // proxy: {
+    //   '/dev-ai': {
+    //     target: 'http://localhost', // 这里填写项目真实的后台接口地址
+    //     changOrigin: true, // 设置允许跨域
+    //     pathRewrite: {
+    //       '^/dev-ai': ''
+    //     }
+    //   }
+    // }
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {

@@ -1,0 +1,20 @@
+server:
+  port: 80
+  application:
+    name: service-gatewayApplication
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          #  使服务发现路由
+          enabled: true
+      routes[0]:
+        id: service-hosp
+        uri: lb://service-hosp
+        predicates: Path=/*/hosp/**
+      routes[1]:
+        id: service-cmn
+        uri: lb://service-cmn
+        predicates: Path=/*/cmn/**
