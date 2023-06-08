@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * <p>
@@ -114,9 +111,20 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
+    public Hospital getByHoscode(String hoscode) {
+        Hospital hospital = hospitalRepository.getHospitalByHoscode(hoscode);
+        return hospital;
+    }
+
+    @Override
     public String getHospName(String hoscode) {
         Hospital hospitalExist = hospitalRepository.getHospitalByHoscode(hoscode);
         return Optional.of(hospitalExist).get().getHosname();
+    }
+
+    @Override
+    public List<Hospital> findByHosname(String hosname) {
+        return hospitalRepository.findHospitalByHosnameLike(hosname);
     }
 
     private Hospital getHospital(String id){
@@ -137,6 +145,20 @@ public class HospitalServiceImpl implements HospitalService {
         hospital.getParam().put("hostypeString", hostypeString);
         hospital.getParam().put("dictName", dictName);
         hospital.getParam().put("fullAddress", dictName);
+    }
+
+    @Override
+    public Map<String, Object> item(String hoscode) {
+        Map<String, Object> result = new HashMap<>();
+        //医院详情
+        Hospital hospital = getByHoscode(hoscode);
+        setHospitalHosType(hospital);
+        result.put("hospital", hospital);
+        //预约规则
+        result.put("bookingRule", hospital.getBookingRule());
+        //不需要重复返回
+        hospital.setBookingRule(null);
+        return result;
     }
 
 }
